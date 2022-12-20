@@ -1,12 +1,8 @@
 import './css/styles.css';
 import debounce from 'lodash.debounce';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
-import fetchCountries from './fetch-countries';
-import {
-  createCountriesList,
-  createCountryInfo,
-  renderCreatedMarkup,
-} from './create-markup';
+import { fetchCountries } from './fetch-countries';
+import { createCountriesList, createCountryInfo,} from './create-markup';
 
 const DEBOUNCE_DELAY = 300;
 const searchBox = document.querySelector('#search-box');
@@ -18,30 +14,21 @@ searchBox.addEventListener('input', debounce(onSearch, DEBOUNCE_DELAY));
 function onSearch(event) {
   clearView();
   event.preventDefault();
+  const searchQuery = event.target.value.trim();
 
-  searchQuery = event.target.value.trim();
-  if (searchQuery === '') {
-    return;
-  }
+  if (searchQuery === '') return;
+
   fetchCountries(searchQuery)
     .then(data => {
-      if (data.length > 10) {
-        Notify.info(
-          'Too many matches found. Please enter a more specific name.'
-        );
-        return;
-      }
-
-      if (data.length > 1 && data.length <= 10) {
-        const markup = createCountriesList(data);
-        renderCreatedMarkup(markup, countryList);
-      }
-
       if (data.length === 1) {
-        const markup = createCountryInfo(data[0]);
-        renderCreatedMarkup(markup, countryInfo);
+        countryInfo.insertAdjacentHTML('beforeend', createCountryInfo(data[0]))
       }
-    })
+      if (data.length > 1 && data.length <= 10) {
+        countryList.insertAdjacentHTML('beforeend', createCountriesList(data));
+      }
+      if (data.length > 10) {
+        Notify.info('Too many matches found. Please enter a more specific name.');
+      }})
     .catch(error => {
       Notify.failure('Oops, there is no country with that name');
     });

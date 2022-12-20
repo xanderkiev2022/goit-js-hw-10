@@ -1,5 +1,5 @@
 function createCountriesList(country) {
-  return countries.reduce(
+  return country.reduce(
     (acc, { flags, name }) =>
       acc +
       `
@@ -20,8 +20,4 @@ function createCountryInfo(country) {
   `;
 }
 
-function renderCreatedMarkup(markup, element) {
-  element.insertAdjacentHTML('beforeend', markup);
-}
-
-export { createCountriesList, createCountryInfo, renderCreatedMarkup };
+export { createCountriesList, createCountryInfo };
