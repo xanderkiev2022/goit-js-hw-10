@@ -1,8 +1,8 @@
 import './css/styles.css';
 import debounce from 'lodash.debounce';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
-import { fetchCountries } from './fetch-countries';
-import { createCountriesList, createCountryInfo,} from './create-markup';
+import { fetchCountries } from './js/fetch-countries';
+import { createCountriesList, createCountryInfo,} from './js/create-markup';
 
 const DEBOUNCE_DELAY = 300;
 const searchBox = document.querySelector('#search-box');
@@ -21,17 +21,13 @@ function onSearch(event) {
   fetchCountries(searchQuery)
     .then(data => {
       if (data.length === 1) {
-        countryInfo.insertAdjacentHTML('beforeend', createCountryInfo(data[0]))
-      }
+        countryInfo.insertAdjacentHTML('beforeend', createCountryInfo(data[0]))}
       if (data.length > 1 && data.length <= 10) {
-        countryList.insertAdjacentHTML('beforeend', createCountriesList(data));
-      }
+        countryList.insertAdjacentHTML('beforeend', createCountriesList(data));}
       if (data.length > 10) {
-        Notify.info('Too many matches found. Please enter a more specific name.');
-      }})
+        Notify.info('Too many matches found. Please enter a more specific name.');}})
     .catch(error => {
-      Notify.failure('Oops, there is no country with that name');
-    });
+        Notify.failure('Oops, there is no country with that name');});
 }
 
 function clearView() {
