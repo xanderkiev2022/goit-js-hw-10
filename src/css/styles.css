@@ -10,6 +10,7 @@ body {
   background-color: #fafafa;
   color: #212121;
   line-height: 1.5;
+  padding: 50px;
 }
 
 #search-box {
@@ -19,11 +20,22 @@ body {
   margin-bottom: 16px;
 }
 
-li {
+h1, li {
   display: flex;
   list-style-type: none;
   font-size: 20px;
-  align-items: center;
+  margin-bottom: 10px;
+  align-items: center;  
+  transform: scale(1);
+  transition: transform 300ms;
+}
+
+h1 {
+  font-size: 30px;
+}
+
+li:hover{
+  transform: scale(1.2);
 }
 
 img {
@@ -37,5 +49,5 @@ ul {
 
 .flag {
   width: 50px;
-  height: 50px;
+  border-radius: 3px;
 }
